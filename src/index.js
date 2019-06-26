@@ -1,12 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import {HashRouter as HRouter,Route,Redirect,Switch} from "react-router-dom";
+import {mainRoute,viwRoute} from "routers/routers";
+ReactDOM.render(
+    <HRouter>
+        <Switch>
+            <Route path="/andmin" render={() => {
+                return <App />
+            }} />
+            {
+                mainRoute.map((item, index) => (
+                    <Route path={item.pathName} component={item.component} key={index} />
+                ))
+            }
+            <Redirect from="/" to="/andmin" exact />
+            <Redirect from="**" to={mainRoute[1].pathName} />
+        </Switch>
+    </HRouter>,
+    document.getElementById('root'),
+    ()=>{
+        // console.log("挂载成功!")
+    }
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+);
