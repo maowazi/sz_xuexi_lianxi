@@ -14,6 +14,8 @@
     Redux-thunk 异步中间件
     prop-types 数据类型检测报错
     css_modules 样式私有化
+    qs
+    http-proxy-middleware
 
     npm install react-router-dom redux redux-thunk antd immutable whatwg-fetch prop-types react-loadable -S
 
