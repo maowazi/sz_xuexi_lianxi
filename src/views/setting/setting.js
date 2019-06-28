@@ -2,7 +2,8 @@ import React from "react";
 import { Card, Button,Pagination  } from 'antd';
 import { Table } from 'antd';
 import blist from "api/Blist/blist";
-import XLSX from 'xlsx'; 
+import XLSX from 'xlsx';
+import Model from "components/modul/modul" 
 
 // const dataSource = [
 //     {
@@ -50,18 +51,21 @@ import XLSX from 'xlsx';
 //     },
 
 // ];
-export default class Setting extends React.Component{
+import {connect} from "react-redux";
+import {tabvalueaction} from "action/actioncritou/actioncritou"
+class Setting extends React.Component{
     constructor(){
         super();
         this.state = {
             dataSource: [],
             columns: [],
             loading: false,
-            flag:true
+            flag:true,
+            moduleflag:false
         }
     }
     render(){
-        let {dataSource,columns,flag} = this.state
+        let {dataSource,columns,flag,moduleflag} = this.state
         return (
                 <Card title="商家列表" bordered={false} extra={<Button onClick={this.exportFile.bind(this)}>导出数据</Button>}>
                    <Table dataSource={dataSource} columns={columns} loading={flag} pagination={{
@@ -69,6 +73,7 @@ export default class Setting extends React.Component{
                        total:100,
                        onChange:this.handChange.bind(this)
                    }}/>
+                   <Model parmas={moduleflag}/>
                 </Card>
         )
     }
@@ -134,7 +139,12 @@ export default class Setting extends React.Component{
         
     }
     handUpdata(text, record, index){
-
+        this.setState({
+            moduleflag:true
+        })
+        // console.log(this.props)//可以拿到定义在mapDispatchToProps里的函数,并可传参
+        this.props.tabledata(record)
+        
     }
     
     handChange(page,dataSize){
@@ -148,16 +158,19 @@ export default class Setting extends React.Component{
             data.push(Object.values(this.state.dataSource[i]))
             
         }
-
-
         // console.log(data)
-
-
-
-
 		const ws = XLSX.utils.aoa_to_sheet(data);
 		const wb = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
 		XLSX.writeFile(wb, "sheetjs.xlsx")
-	};
+    };
 }
+const mapStateToProps = (state)=>({
+
+})
+const mapDispatchToProps = (dispatch)=>({
+    tabledata(val){
+        dispatch(tabvalueaction(val))
+    }
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Setting)
