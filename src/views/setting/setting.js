@@ -1,56 +1,11 @@
 import React from "react";
-import { Card, Button,Pagination  } from 'antd';
+import { Card, Button,} from 'antd';
 import { Table } from 'antd';
 import blist from "api/Blist/blist";
 import XLSX from 'xlsx';
 import Model from "components/modul/modul" 
 
-// const dataSource = [
-//     {
-//         key: '1',
-//         name: '胡彦斌',
-//         age: 32,
-//         phone: "12345678910",
-//         address: '西湖区湖底公园1号',
-//     },
-//     {
-//         key: '2',
-//         name: '胡彦祖',
-//         age: 42,
-//         phone: "12345678911",
-//         address: '西湖区湖底公园1号',
-//     }
 
-// ];
-
-// const columns = [
-//     {
-//         title: '姓名',
-//         dataIndex: 'name',
-//         key: 'name',
-//     },
-//     {
-//         title: '年龄',
-//         dataIndex: 'age',
-//         key: 'age',
-//     },
-//     {
-//         title: "电话",
-//         dataIndex: 'phone',
-//         key: "phone"
-//     },
-//     {
-//         title: '住址',
-//         dataIndex: 'address',
-//         key: 'address',
-//     },
-//     {
-//         title: "操作",
-//         key: "operation",
-//         render: () => (<div><Button>删除</Button><Button>修改</Button></div>)
-//     },
-
-// ];
 import {connect} from "react-redux";
 import {tabvalueaction} from "action/actioncritou/actioncritou"
 class Setting extends React.Component{
@@ -67,14 +22,15 @@ class Setting extends React.Component{
     render(){
         let {dataSource,columns,flag,moduleflag} = this.state
         return (
+            <div>
                 <Card title="商家列表" bordered={false} extra={<Button onClick={this.exportFile.bind(this)}>导出数据</Button>}>
                    <Table dataSource={dataSource} columns={columns} loading={flag} pagination={{
                        pageSize:2,
-                       total:100,
-                       onChange:this.handChange.bind(this)
+                       total:100
                    }}/>
-                   <Model parmas={moduleflag}/>
                 </Card>
+                <Model parmas={moduleflag}/>
+            </div>
         )
     }
     async componentDidMount() {
@@ -147,9 +103,7 @@ class Setting extends React.Component{
         
     }
     
-    handChange(page,dataSize){
-        // console.log(page,dataSize)
-    }
+    
     
     exportFile() {
         let data = [Object.keys(this.state.dataSource[0])];

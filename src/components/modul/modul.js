@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button,Form,Icon, Input, Checkbox } from 'antd';
+import { Modal, Button} from 'antd';
 import WrappedNormalLoginForm from "components/from/from";
 
 export default class Model extends React.Component{
@@ -29,8 +29,6 @@ export default class Model extends React.Component{
     render(){
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>
-                </Button>
                 <Modal
                     title="修改商家信息"
                     visible={this.state.visible}
